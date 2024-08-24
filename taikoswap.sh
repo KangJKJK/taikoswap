@@ -53,9 +53,9 @@ chain_id = 1
 solc_version = "0.8.26"
 
 [remappings]
-"forge-std/=lib/forge-std/src/"
-"uniswap-v3/=lib/uniswap-v3-periphery/contracts/"
+"uniswap-v3/=lib/uniswap-v3/contracts/"
 "openzeppelin/=lib/openzeppelin-contracts/contracts/"
+"forge-std/=lib/forge-std/src/"
 EOF
 
 # `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
@@ -73,8 +73,8 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "uniswap-v3/contracts/interfaces/ISwapRouter.sol";
+import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
     ISwapRouter public swapRouter;
@@ -102,7 +102,7 @@ cat <<EOF > scripts/DeployUniV3Swap.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "uniswap-v3/contracts/interfaces/ISwapRouter.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract DeployUniswapV3Swap is Script {
@@ -127,7 +127,7 @@ cat <<EOF > scripts/SwapWETHToETH.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract SwapWETHToETH is Script {
