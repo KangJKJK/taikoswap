@@ -25,6 +25,12 @@ if [ ! -d .git ]; then
   git init
 fi
 
+# .env 파일 생성
+print_command ".env 파일을 생성 중..."
+cat <<EOF > .env
+PRIVATE_KEY=$WALLET_PRIVATE_KEY
+EOF
+
 # Foundry 설치
 print_command "Foundry를 설치 중..."
 curl -L https://foundry.paradigm.xyz | bash
@@ -36,15 +42,6 @@ export PATH="$HOME/.foundry/bin:$PATH"
 # Foundry 버전 확인
 print_command "Foundry 버전 확인 중..."
 forge --version
-
-# 사용자에게 개인 키 입력 요청
-read -p "EVM 지갑 개인 키를 입력하세요 (0x 제외): " WALLET_PRIVATE_KEY
-
-# .env 파일 생성
-print_command ".env 파일을 생성 중..."
-cat <<EOF > .env
-PRIVATE_KEY=$WALLET_PRIVATE_KEY
-EOF
 
 # Foundry 설정 파일 작성
 print_command "Foundry 설정 파일을 생성 중..."
@@ -197,7 +194,7 @@ forge script scripts/DeployUniV3Swap.s.sol --rpc-url https://rpc.mainnet.taiko.x
 
 # WETH를 ETH로 스왑
 print_command "WETH를 ETH로 스왑 중..."
-forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --gas-price 100000000 --gas-limit 36312
+forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --verify -vvvv
 
 # 테스트 실행
 print_command "테스트를 실행 중..."
