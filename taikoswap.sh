@@ -33,6 +33,7 @@ curl -L https://foundry.paradigm.xyz | bash
 
 # Foundry 명령어 경로 설정
 export PATH="$HOME/.foundry/bin:$PATH"
+sudo ln -sf $HOME/.foundry/bin/forge /usr/local/bin/forge
 
 # Foundry 버전 확인
 print_command "Foundry 버전 확인 중..."
