@@ -42,6 +42,7 @@ EOF
 
 # Foundry 설정 파일 작성
 print_command "Foundry 설정 파일을 생성 중..."
+chmod 644 /root/taikoswap/foundry.toml
 cat <<EOF > foundry.toml
 [rpc]
 url = "https://rpc.mainnet.taiko.xyz"
@@ -53,11 +54,13 @@ chain_id = 1
 solc_version = "0.8.26"
 
 [remappings]
+"alias/=path/to/library/"
 "uniswap-v3/=lib/uniswap-v3/contracts/"
 "openzeppelin/=lib/openzeppelin-contracts/contracts/"
 "forge-std/=lib/forge-std/src/"
 EOF
 
+chmod 644 /root/taikoswap/foundry.toml
 # `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
 print_command "라이브러리를 설치 중..."
 forge install foundry-rs/forge-std
