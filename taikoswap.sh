@@ -84,9 +84,23 @@ git commit -m "Initial commit: add .env, foundry.toml, .gitignore"
 
 # 기존 서브모듈 제거
 print_command "기존 서브모듈을 제거 중..."
-git submodule deinit -f lib/forge-std
-git rm -f lib/forge-std
-rm -rf .git/modules/lib/forge-std
+if [ -d lib/forge-std ]; then
+  git submodule deinit -f lib/forge-std
+  git rm -f lib/forge-std
+  rm -rf .git/modules/lib/forge-std
+fi
+
+if [ -d lib/uniswap-v3 ]; then
+  git submodule deinit -f lib/uniswap-v3
+  git rm -f lib/uniswap-v3
+  rm -rf .git/modules/lib/uniswap-v3
+fi
+
+if [ -d lib/openzeppelin-contracts ]; then
+  git submodule deinit -f lib/openzeppelin-contracts
+  git rm -f lib/openzeppelin-contracts
+  rm -rf .git/modules/lib/openzeppelin-contracts
+fi
 
 git submodule deinit -f lib/uniswap-v3
 git rm -f lib/uniswap-v3
@@ -102,8 +116,17 @@ forge install foundry-rs/forge-std --no-commit
 forge install uniswap/v3-periphery --no-commit
 forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
+# .env 파일을 Git에 추가하고 커밋
+print_command "Git에 .env 파일을 추가하고 커밋 중..."
+# .gitignore에서 .env 항목 제거
+sed -i '/\.env/d' .gitignore
+# .env 파일을 Git에 추가
+git add .env
+git commit -m "Add .env file"
+
 # Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
+git rm -r --cached .
 git add .
 git commit -m "Add libraries without committing the libraries themselves"
 
