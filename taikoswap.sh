@@ -40,12 +40,6 @@ cat <<EOF > .env
 PRIVATE_KEY=$WALLET_PRIVATE_KEY
 EOF
 
-# 기존 Foundry 설정 파일 삭제 (백업 없이 삭제)
-if [ -f foundry.toml ]; then
-  print_command "기존 foundry.toml 파일을 삭제 중..."
-  rm foundry.toml
-fi
-
 # Foundry 설정 파일 작성
 print_command "Foundry 설정 파일을 생성 중..."
 cat <<EOF > foundry.toml
@@ -60,46 +54,15 @@ solc_version = "0.8.26"
 
 [remappings]
 "forge-std/=lib/forge-std/src/"
-"uniswap-v3/=lib/uniswap-v3/contracts/"
+"uniswap-v3/=lib/uniswap-v3-periphery/contracts/"
 "openzeppelin/=lib/openzeppelin-contracts/contracts/"
 EOF
 
-# `forge-std`와 Uniswap V3, OpenZeppelin의 라이브러리 수동 설치
-print_command "라이브러리를 수동으로 설치 중..."
-mkdir -p lib
-cd lib
-
-# `forge-std` 라이브러리 다운로드 및 설치
-print_command "forge-std 라이브러리 설치 중..."
-rm -rf forge-std # 이전에 설치된 폴더가 있다면 삭제
-mkdir -p forge-std
-cd forge-std
-curl -L https://github.com/foundry-rs/forge-std/archive/refs/heads/master.zip -o forge-std.zip
-unzip forge-std.zip
-rm forge-std.zip
-mv forge-std-master/* .
-rm -r forge-std-master
-cd ..
-
-# Uniswap V3 라이브러리 클론
-print_command "Uniswap V3 라이브러리 설치 중..."
-rm -rf uniswap-v3 # 이전에 설치된 폴더가 있다면 삭제
-mkdir -p uniswap-v3
-cd uniswap-v3
-git clone https://github.com/uniswap/v3-periphery.git .
-cd ..
-
-# OpenZeppelin 라이브러리 다운로드 및 설치
-print_command "OpenZeppelin 라이브러리 설치 중..."
-rm -rf openzeppelin-contracts # 이전에 설치된 폴더가 있다면 삭제
-mkdir -p openzeppelin-contracts
-cd openzeppelin-contracts
-curl -L https://github.com/OpenZeppelin/openzeppelin-contracts/archive/refs/heads/master.zip -o openzeppelin-contracts.zip
-unzip openzeppelin-contracts.zip
-rm openzeppelin-contracts.zip
-mv openzeppelin-contracts-master/* .
-rm -r openzeppelin-contracts-master
-cd ..
+# `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
+print_command "라이브러리를 설치 중..."
+forge install foundry-rs/forge-std
+forge install uniswap/v3-periphery
+forge install OpenZeppelin/openzeppelin-contracts
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
