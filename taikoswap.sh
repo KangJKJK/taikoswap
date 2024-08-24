@@ -59,9 +59,10 @@ solc_version = "0.8.19"
 url = "https://rpc.mainnet.taiko.xyz"
 
 [profile.remappings]
-"uniswap-v3" = "lib/v3-periphery/contracts/"
-"openzeppelin" = "lib/openzeppelin-contracts/contracts/"
-"forge-std" = "lib/forge-std/src/"
+"@openzeppelin/contracts/=" = "lib/openzeppelin-contracts/contracts/"
+"@uniswap/v3-core/=" = "lib/uniswap-v3-core/contracts/"
+"@uniswap/v3-periphery/=" = "lib/v3-periphery/contracts/"
+"forge-std/=" = "lib/forge-std/src/"
 EOF
 
 # .gitignore 파일 생성
