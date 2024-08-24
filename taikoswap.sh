@@ -25,6 +25,17 @@ if [ ! -d .git ]; then
   git init
 fi
 
+# Git 초기화 후 상태 정리 추가
+print_command "Git 상태 정리 중..."
+git add .
+git commit -m "Initial commit before installing libraries"
+
+# 라이브러리 설치 명령
+print_command "라이브러리를 설치 중..."
+forge install foundry-rs/forge-std --no-commit
+forge install uniswap/v3-periphery --no-commit
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
+
 # .gitignore 파일 생성
 print_command ".gitignore 파일을 설정 중..."
 cat <<EOF > .gitignore
