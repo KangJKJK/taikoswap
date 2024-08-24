@@ -85,11 +85,6 @@ sed -i '/\.env/d' .gitignore
 git add .env
 git commit -m "Add .env file" || true  # 실패해도 계속 진행
 
-# 명령어 출력 함수
-print_command() {
-  echo -e "${BOLD}${YELLOW}$1${RESET}"
-}
-
 # 서브모듈 제거 함수
 remove_submodule() {
   local submodule_path=$1
@@ -108,11 +103,6 @@ remove_submodule() {
     echo "Submodule at $submodule_path does not exist, skipping."
   fi
 }
-
-# Git 상태 정리 및 초기 커밋
-print_command "Git에 파일을 추가하고 초기 커밋 중..."
-git add .
-git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
 
 # 기존 서브모듈 제거
 print_command "기존 서브모듈 제거 중..."
