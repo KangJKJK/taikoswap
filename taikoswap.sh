@@ -64,14 +64,23 @@ print_command "라이브러리를 수동으로 설치 중..."
 mkdir -p lib
 cd lib
 
-# `forge-std` 라이브러리 클론
-git clone https://github.com/foundry-rs/forge-std.git
+# `forge-std` 라이브러리 다운로드
+print_command "forge-std 라이브러리 설치 중..."
+mkdir -p forge-std
+cd forge-std
+curl -L https://github.com/foundry-rs/forge-std/archive/refs/heads/master.zip -o forge-std.zip
+unzip forge-std.zip
+rm forge-std.zip
+mv forge-std-master/* .
+rm -r forge-std-master
+cd ..
 
 # Uniswap V3 라이브러리 클론
-git clone https://github.com/uniswap/v3-periphery.git
-
-# 필요한 파일이 제대로 설치되었는지 확인
-print_command "라이브러리 설치 완료."
+print_command "Uniswap V3 라이브러리 설치 중..."
+mkdir -p uniswap-v3
+cd uniswap-v3
+git clone https://github.com/uniswap/v3-periphery.git .
+cd ..
 
 # 디렉토리 원위치로 이동
 cd ..
