@@ -63,11 +63,20 @@ EOF
 print_command "라이브러리를 수동으로 설치 중..."
 mkdir -p lib
 cd lib
+
+# `forge-std` 라이브러리 클론
 git clone https://github.com/foundry-rs/forge-std.git
+
+# Uniswap V3 라이브러리 클론
 git clone https://github.com/uniswap/v3-periphery.git
+
+# 필요한 파일이 제대로 설치되었는지 확인
+print_command "라이브러리 설치 완료."
+
+# 디렉토리 원위치로 이동
 cd ..
 
-# 스크립트 및 계약 디렉토리 생성
+# 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
 mkdir -p scripts contracts
 
