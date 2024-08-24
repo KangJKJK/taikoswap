@@ -66,7 +66,6 @@ url = "https://rpc.mainnet.taiko.xyz"
 
 [profile.remappings]
 "@openzeppelin/contracts/=" = "lib/openzeppelin-contracts/contracts/"
-"@uniswap/v3-core/=" = "lib/uniswap-v3/contracts/"
 "@uniswap/v3-periphery/=" = "lib/v3-periphery/contracts/"
 "forge-std/=" = "lib/forge-std/src/"
 EOF
@@ -166,7 +165,7 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@uniswap/v3-core/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
@@ -196,7 +195,7 @@ cat <<EOF > scripts/DeployUniV3Swap.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "@uniswap/v3-core/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract DeployUniswapV3Swap is Script {
