@@ -32,9 +32,15 @@ git commit -m "Initial commit before installing libraries"
 
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
+# 우선 Git 상태를 정리한 후, 라이브러리 설치를 시도
 forge install foundry-rs/forge-std --no-commit
 forge install uniswap/v3-periphery --no-commit
 forge install OpenZeppelin/openzeppelin-contracts --no-commit
+
+# Git 상태 정리 후, 라이브러리 설치 완료 커밋
+print_command "Git에 파일을 추가하고 커밋 중..."
+git add .
+git commit -m "Add libraries without committing the libraries themselves"
 
 # .gitignore 파일 생성
 print_command ".gitignore 파일을 설정 중..."
@@ -87,17 +93,6 @@ url = "https://rpc.mainnet.taiko.xyz"
 "openzeppelin" = "lib/openzeppelin-contracts/contracts/"
 "forge-std" = "lib/forge-std/src/"
 EOF
-
-# Git에 파일 스테이징하고 커밋
-print_command "Git에 파일을 추가하고 커밋 중..."
-git add .
-git commit -m "Initial commit: add base files and directories"
-
-# `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
-print_command "라이브러리를 설치 중..."
-forge install foundry-rs/forge-std
-forge install uniswap/v3-periphery
-forge install OpenZeppelin/openzeppelin-contracts
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
