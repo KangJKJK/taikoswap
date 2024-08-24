@@ -43,16 +43,16 @@ EOF
 # Foundry 설정 파일 작성
 print_command "Foundry 설정 파일을 생성 중..."
 cat <<EOF > foundry.toml
-[rpc]
-url = "https://rpc.mainnet.taiko.xyz"
-
 [profile]
 chain_id = 167000
 
 [profile.compiler]
 solc_version = "0.8.19"
 
-[remappings]
+[profile.rpc]
+url = "https://rpc.mainnet.taiko.xyz"
+
+[profile.remappings]
 "uniswap-v3" = "lib/uniswap-v3/contracts/"
 "openzeppelin" = "lib/openzeppelin-contracts/contracts/"
 "forge-std" = "lib/forge-std/src/"
