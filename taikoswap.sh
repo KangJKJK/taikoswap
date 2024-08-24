@@ -114,6 +114,7 @@ remove_submodule "lib/openzeppelin-contracts"
 
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
+apt install snap
 forge install foundry-rs/forge-std --no-commit || true
 forge install uniswap/v3-periphery --no-commit || true
 forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
