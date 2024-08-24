@@ -19,6 +19,10 @@ print_command "디렉토리를 설정 중..."
 mkdir -p /root/taikoswap
 cd /root/taikoswap
 
+# Git 초기화
+print_command "Git 저장소를 초기화 중..."
+git init
+
 # Foundry 설치
 print_command "Foundry를 설치 중..."
 curl -L https://foundry.paradigm.xyz | bash
