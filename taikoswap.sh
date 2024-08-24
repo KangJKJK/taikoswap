@@ -83,11 +83,12 @@ print_command "Git에 .env 파일을 추가하고 커밋 중..."
 sed -i '/\.env/d' .gitignore
 # .env 파일을 Git에 추가
 git add .env
-git commit -m "Add .env file"
+git commit -m "Add .env file" || true  # 실패해도 계속 진행
+
 # Git 상태 정리 및 초기 커밋
-print_command "Git에 파일을 추가하고 커밋 중..."
+print_command "Git에 파일을 추가하고 초기 커밋 중..."
 git add .
-git commit -m "Initial commit: add .env, foundry.toml, .gitignore"
+git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
 
 # 기존 서브모듈 제거
 print_command "기존 서브모듈을 제거 중..."
@@ -115,19 +116,11 @@ forge install foundry-rs/forge-std --no-commit
 forge install uniswap/v3-periphery --no-commit
 forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
-# .env 파일을 Git에 추가하고 커밋
-print_command "Git에 .env 파일을 추가하고 커밋 중..."
-# .gitignore에서 .env 항목 제거
-sed -i '/\.env/d' .gitignore
-# .env 파일을 Git에 추가
-git add .env
-git commit -m "Add .env file"
-
 # Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
 git rm -r --cached .
 git add .
-git commit -m "Add libraries without committing the libraries themselves"
+git commit -m "Add libraries without committing the libraries themselves" || true  # 실패해도 계속 진행
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
