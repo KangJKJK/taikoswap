@@ -231,6 +231,7 @@ EOF
 
 # 스마트 계약 컴파일
 print_command "스마트 계약을 컴파일 중..."
+forge clean
 forge build
 
 # 테스트 실행
