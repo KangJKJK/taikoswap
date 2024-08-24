@@ -90,20 +90,17 @@ print_command() {
   echo -e "${BOLD}${YELLOW}$1${RESET}"
 }
 
-# Git 상태 정리 및 초기 커밋
-print_command "Git에 파일을 추가하고 초기 커밋 중..."
-git add .
-git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
-
 # 서브모듈 제거 함수
 remove_submodule() {
   local submodule_path=$1
-  
-  # 서브모듈 경로가 존재할 때만 처리
-  if git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
-    echo "Removing submodule at $submodule_path"
 
-    # 서브모듈 제거
+  if [ -d "$submodule_path" ]; then
+    echo "Removing directory at $submodule_path"
+    rm -rf "$submodule_path"
+  fi
+  
+  if git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
+    echo "Removing submodule entry for $submodule_path"
     git submodule deinit -f "$submodule_path" || true
     git rm -f "$submodule_path" || true
     rm -rf ".git/modules/$submodule_path" || true
@@ -111,6 +108,11 @@ remove_submodule() {
     echo "Submodule at $submodule_path does not exist, skipping."
   fi
 }
+
+# Git 상태 정리 및 초기 커밋
+print_command "Git에 파일을 추가하고 초기 커밋 중..."
+git add .
+git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
 
 # 기존 서브모듈 제거
 print_command "기존 서브모듈 제거 중..."
@@ -131,7 +133,6 @@ git commit -m "Remove problematic directories from index" || true
 
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
-apt install snap || true
 forge install foundry-rs/forge-std --no-commit || true
 forge install uniswap/v3-periphery --no-commit || true
 forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
