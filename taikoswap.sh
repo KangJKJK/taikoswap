@@ -64,12 +64,11 @@ print_command "라이브러리를 설치 중..."
 forge install foundry-rs/forge-std
 forge install uniswap/v3-periphery
 
-# 스크립트 디렉토리 생성
-mkdir -p scripts
-mkdir -p contracts
+# 스크립트 및 계약 디렉토리 생성
+print_command "디렉토리 및 계약 파일을 설정 중..."
+mkdir -p scripts contracts
 
 # UniswapV3Swap 계약 생성
-print_command "UniswapV3Swap 계약을 생성 중..."
 cat <<EOF > contracts/UniswapV3Swap.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -98,7 +97,6 @@ contract UniswapV3Swap {
 EOF
 
 # UniswapV3Swap 배포 스크립트 생성
-print_command "UniswapV3Swap 배포 스크립트를 생성 중..."
 cat <<EOF > scripts/DeployUniV3Swap.s.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -124,7 +122,6 @@ contract DeployUniswapV3Swap is Script {
 EOF
 
 # WETH를 ETH로 스왑하는 스크립트 생성
-print_command "WETH를 ETH로 스왑하는 스크립트를 생성 중..."
 cat <<EOF > scripts/SwapWETHToETH.s.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
