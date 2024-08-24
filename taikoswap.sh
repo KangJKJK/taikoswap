@@ -57,6 +57,11 @@ chain_id = 1
 
 [profile.compiler]
 solc_version = "0.8.19"
+
+[remappings]
+"forge-std/=lib/forge-std/src/"
+"uniswap-v3/=lib/uniswap-v3/contracts/"
+"openzeppelin/=lib/openzeppelin-contracts/contracts/"
 EOF
 
 # `forge-std`와 Uniswap V3의 라이브러리 수동 설치
@@ -82,7 +87,15 @@ cd uniswap-v3
 git clone https://github.com/uniswap/v3-periphery.git .
 cd ..
 
-# 디렉토리 원위치로 이동
+# OpenZeppelin 라이브러리 다운로드
+print_command "OpenZeppelin 라이브러리 설치 중..."
+mkdir -p openzeppelin-contracts
+cd openzeppelin-contracts
+curl -L https://github.com/OpenZeppelin/openzeppelin-contracts/archive/refs/heads/master.zip -o openzeppelin-contracts.zip
+unzip openzeppelin-contracts.zip
+rm openzeppelin-contracts.zip
+mv openzeppelin-contracts-master/* .
+rm -r openzeppelin-contracts-master
 cd ..
 
 # 계약 및 스크립트 디렉토리 생성
