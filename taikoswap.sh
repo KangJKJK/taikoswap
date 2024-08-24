@@ -77,6 +77,13 @@ cat <<EOF > .gitignore
 .env
 EOF
 
+# .env 파일을 Git에 추가하고 커밋
+print_command "Git에 .env 파일을 추가하고 커밋 중..."
+# .gitignore에서 .env 항목 제거
+sed -i '/\.env/d' .gitignore
+# .env 파일을 Git에 추가
+git add .env
+git commit -m "Add .env file"
 # Git 상태 정리 및 초기 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
 git add .
