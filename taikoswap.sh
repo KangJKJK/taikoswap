@@ -28,11 +28,15 @@ fi
 # Foundry 설치
 print_command "Foundry를 설치 중..."
 sudo apt-get remove forge
+sudo rm /usr/bin/forge
 curl -L https://foundry.paradigm.xyz | bash
+source ~/.foundry/envs/latest/env
 . "$HOME/.foundry/bin/foundryup"
 
 # Foundry 명령어 경로 설정
 export PATH="$HOME/.foundry/bin:$PATH"
+
+# 심볼릭 링크 설정 (이미 설정되어 있는 경우 덮어씌우기)
 sudo ln -sf $HOME/.foundry/bin/forge /usr/local/bin/forge
 
 # Foundry 버전 확인
