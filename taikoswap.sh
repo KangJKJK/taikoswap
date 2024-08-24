@@ -58,8 +58,8 @@ cat <<EOF > scripts/DeployUniV3Swap.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "../contracts/UniswapV3Swap.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "../contracts/UniswapV3Swap.sol";
 
 contract DeployUniswapV3Swap is Script {
     function run() external {
@@ -84,8 +84,8 @@ cat <<EOF > scripts/SwapWETHToETH.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "../contracts/UniswapV3Swap.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "../contracts/UniswapV3Swap.sol";
 
 contract SwapWETHToETH is Script {
     function run() external {
