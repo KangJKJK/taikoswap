@@ -38,16 +38,18 @@ EOF
 # Foundry 설정 파일 작성
 print_command "Foundry 설정 파일을 업데이트 중..."
 cat <<EOF > foundry.toml
-[profile]
-rpc_url = "https://rpc.mainnet.taiko.xyz"
+[rpc]
+url = "https://rpc.mainnet.taiko.xyz"
 
-[compiler]
+[profile]
+chain_id = 1  # Taiko의 Chain ID를 설정하세요. (체인 ID는 실제 Taiko 네트워크의 ID를 사용하세요.)
+
+[profile.compiler]
 solc_version = "0.8.19"
 EOF
 
-# 스마트 계약 컴파일
-print_command "스마트 계약을 컴파일 중..."
-forge build
+# 스크립트 디렉토리 생성
+mkdir -p scripts
 
 # UniswapV3Swap 배포 스크립트 생성
 print_command "UniswapV3Swap 배포 스크립트를 생성 중..."
@@ -102,10 +104,15 @@ contract SwapWETHToETH is Script {
 }
 EOF
 
-# Foundry 스크립트 실행
+# 스마트 계약 컴파일
+print_command "스마트 계약을 컴파일 중..."
+forge build
+
+# UniswapV3Swap 계약을 배포
 print_command "UniswapV3Swap 계약을 배포 중..."
 forge script scripts/DeployUniV3Swap.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --verify -vvvv
 
+# WETH를 ETH로 스왑
 print_command "WETH를 ETH로 스왑 중..."
 forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --gas-price 100000000 --gas-limit 36312
 
