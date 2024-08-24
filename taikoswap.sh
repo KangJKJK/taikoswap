@@ -102,14 +102,6 @@ if [ -d lib/openzeppelin-contracts ]; then
   rm -rf .git/modules/lib/openzeppelin-contracts
 fi
 
-git submodule deinit -f lib/uniswap-v3
-git rm -f lib/uniswap-v3
-rm -rf .git/modules/lib/uniswap-v3
-
-git submodule deinit -f lib/openzeppelin-contracts
-git rm -f lib/openzeppelin-contracts
-rm -rf .git/modules/lib/openzeppelin-contracts
-
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
 forge install foundry-rs/forge-std --no-commit
