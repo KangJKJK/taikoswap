@@ -90,17 +90,24 @@ print_command "Git에 파일을 추가하고 초기 커밋 중..."
 git add .
 git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
 
-# 기존 서브모듈 제거
-print_command "기존 서브모듈을 제거 중..."
+# 서브모듈 제거 함수
 remove_submodule() {
   local submodule_path=$1
-  if [ -d "$submodule_path" ]; then
+  
+  # 서브모듈 경로가 존재할 때만 처리
+  if [ -d "$submodule_path" ] || git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
+    echo "Removing submodule at $submodule_path"
+
+    # 서브모듈 제거
     git submodule deinit -f "$submodule_path" || true
     git rm -f "$submodule_path" || true
     rm -rf ".git/modules/$submodule_path" || true
+  else
+    echo "Submodule at $submodule_path does not exist, skipping."
   fi
 }
 
+# 기존 서브모듈 제거
 remove_submodule "lib/forge-std"
 remove_submodule "lib/uniswap-v3"
 remove_submodule "lib/openzeppelin-contracts"
