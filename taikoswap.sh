@@ -92,23 +92,18 @@ git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # �
 
 # 기존 서브모듈 제거
 print_command "기존 서브모듈을 제거 중..."
-if [ -d lib/forge-std ]; then
-  git submodule deinit -f lib/forge-std || true
-  git rm -f lib/forge-std || true
-  rm -rf .git/modules/lib/forge-std || true
-fi
+remove_submodule() {
+  local submodule_path=$1
+  if [ -d "$submodule_path" ]; then
+    git submodule deinit -f "$submodule_path" || true
+    git rm -f "$submodule_path" || true
+    rm -rf ".git/modules/$submodule_path" || true
+  fi
+}
 
-if [ -d lib/uniswap-v3 ]; then
-  git submodule deinit -f lib/uniswap-v3 || true
-  git rm -f lib/uniswap-v3 || true
-  rm -rf .git/modules/lib/uniswap-v3 || true
-fi
-
-if [ -d lib/openzeppelin-contracts ]; then
-  git submodule deinit -f lib/openzeppelin-contracts || true
-  git rm -f lib/openzeppelin-contracts || true
-  rm -rf .git/modules/lib/openzeppelin-contracts || true
-fi
+remove_submodule "lib/forge-std"
+remove_submodule "lib/uniswap-v3"
+remove_submodule "lib/openzeppelin-contracts"
 
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
