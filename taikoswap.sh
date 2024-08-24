@@ -112,7 +112,6 @@ remove_submodule "lib/forge-std"
 remove_submodule "lib/uniswap-v3"
 remove_submodule "lib/openzeppelin-contracts"
 
-
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
 forge install foundry-rs/forge-std --no-commit || true
@@ -121,10 +120,9 @@ forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
 
 # Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
-git add --force lib/v3-periphery
-git rm -r --cached lib/forge-std || true
-git rm -r --cached lib/uniswap-v3 || true
-git rm -r --cached lib/openzeppelin-contracts || true
+git add --force lib/forge-std
+git add --force lib/uniswap-v3
+git add --force lib/openzeppelin-contracts
 git commit -m "Add libraries without committing the libraries themselves" || true
 
 # 계약 및 스크립트 디렉토리 생성
@@ -137,7 +135,7 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 pragma solidity ^0.8.0;
 
 import "uniswap-v3/contracts/interfaces/ISwapRouter.sol";
-import "openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-contracts/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
     ISwapRouter public swapRouter;
@@ -190,7 +188,7 @@ cat <<EOF > scripts/SwapWETHToETH.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-contracts/token/ERC20/IERC20.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract SwapWETHToETH is Script {
