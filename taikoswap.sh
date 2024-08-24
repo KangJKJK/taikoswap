@@ -40,21 +40,62 @@ cat <<EOF > .env
 PRIVATE_KEY=$WALLET_PRIVATE_KEY
 EOF
 
+# 기존 Foundry 설정 파일 삭제 (백업 없이 삭제)
+if [ -f foundry.toml ]; then
+  print_command "기존 foundry.toml 파일을 삭제 중..."
+  rm foundry.toml
+fi
+
 # Foundry 설정 파일 작성
-print_command "Foundry 설정 파일을 업데이트 중..."
+print_command "Foundry 설정 파일을 생성 중..."
 cat <<EOF > foundry.toml
 [rpc]
 url = "https://rpc.mainnet.taiko.xyz"
 
 [profile]
-chain_id = 1  # Taiko의 Chain ID를 설정하세요. (체인 ID는 실제 Taiko 네트워크의 ID를 사용하세요.)
+chain_id = 1
 
 [profile.compiler]
 solc_version = "0.8.19"
 EOF
 
+# `forge-std`와 Uniswap V3의 라이브러리 설치
+print_command "라이브러리를 설치 중..."
+forge install foundry-rs/forge-std
+forge install uniswap/v3-periphery
+
 # 스크립트 디렉토리 생성
 mkdir -p scripts
+mkdir -p contracts
+
+# UniswapV3Swap 계약 생성
+print_command "UniswapV3Swap 계약을 생성 중..."
+cat <<EOF > contracts/UniswapV3Swap.sol
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+contract UniswapV3Swap {
+    ISwapRouter public swapRouter;
+    address public wethAddress;
+    address public ethAddress;
+
+    constructor(ISwapRouter _swapRouter, address _wethAddress, address _ethAddress) {
+        swapRouter = _swapRouter;
+        wethAddress = _wethAddress;
+        ethAddress = _ethAddress;
+    }
+
+    function swapExactInputSingleHop(uint256 amountIn) external {
+        IERC20(wethAddress).transferFrom(msg.sender, address(this), amountIn);
+        IERC20(wethAddress).approve(address(swapRouter), amountIn);
+
+        // Swap logic here...
+    }
+}
+EOF
 
 # UniswapV3Swap 배포 스크립트 생성
 print_command "UniswapV3Swap 배포 스크립트를 생성 중..."
