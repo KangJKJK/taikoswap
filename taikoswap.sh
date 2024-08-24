@@ -88,10 +88,7 @@ forge install foundry-rs/forge-std --no-commit
 forge install uniswap/v3-periphery --no-commit
 forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
-# Git 상태 확인 및 라이브러리 설치 완료 커밋
-print_command "Git 상태 확인 중..."
-git status
-
+# Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
 git add .
 git commit -m "Add libraries without committing the libraries themselves"
