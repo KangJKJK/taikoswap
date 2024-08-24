@@ -47,7 +47,7 @@ cat <<EOF > foundry.toml
 url = "https://rpc.mainnet.taiko.xyz"
 
 [profile]
-chain_id = 1
+chain_id = 167000
 
 [profile.compiler]
 solc_version = "0.8.19"
