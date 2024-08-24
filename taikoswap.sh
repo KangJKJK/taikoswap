@@ -64,11 +64,6 @@ solc_version = "0.8.19"
 [profile.rpc]
 url = "https://rpc.mainnet.taiko.xyz"
 
-[profile.remappings]
-"@openzeppelin/contracts/=" = "lib/openzeppelin-contracts/"
-"@uniswap/v3-core/=" = "lib/v3-core/"
-"@uniswap/v3-periphery/=" = "lib/v3-periphery/"
-"forge-std/=" = "lib/forge-std/"
 EOF
 
 # .gitignore 파일 생성
@@ -167,7 +162,7 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 pragma solidity ^0.8.0;
 
 import "/root/taikoswap/lib/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "/root/taikoswap/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
     ISwapRouter public swapRouter;
@@ -197,7 +192,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
 import "/root/taikoswap/lib/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import "../contracts/UniswapV3Swap.sol";
+import "/root/taikoswap/contracts/UniswapV3Swap.sol";
 
 contract DeployUniswapV3Swap is Script {
     function run() external {
@@ -221,8 +216,8 @@ cat <<EOF > scripts/SwapWETHToETH.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "openzeppelin/token/ERC20/IERC20.sol";
-import "../contracts/UniswapV3Swap.sol";
+import "/root/taikoswap/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
+import "/root/taikoswap/contracts/UniswapV3Swap.sol";
 
 contract SwapWETHToETH is Script {
     function run() external {
