@@ -59,7 +59,7 @@ solc_version = "0.8.19"
 url = "https://rpc.mainnet.taiko.xyz"
 
 [profile.remappings]
-"uniswap-v3" = "lib/uniswap-v3/contracts/"
+"uniswap-v3" = "lib/v3-periphery/contracts/"
 "openzeppelin" = "lib/openzeppelin-contracts/contracts/"
 "forge-std" = "lib/forge-std/src/"
 EOF
@@ -104,16 +104,21 @@ remove_submodule() {
   fi
 }
 
+# Git 상태 정리 및 초기 커밋
+print_command "Git에 파일을 추가하고 초기 커밋 중..."
+git add .
+git commit -m "Initial commit: add .env, foundry.toml, .gitignore" || true  # 실패해도 계속 진행
+
 # 기존 서브모듈 제거
 print_command "기존 서브모듈 제거 중..."
 remove_submodule "lib/forge-std"
-remove_submodule "lib/uniswap-v3"
+remove_submodule "lib/v3-periphery"
 remove_submodule "lib/openzeppelin-contracts"
 
 # 서브모듈 제거 후 캐시에서 항목 제거
 print_command "Removing cached entries for old submodules..."
 git rm -r --cached lib/forge-std || true
-git rm -r --cached lib/uniswap-v3 || true
+git rm -r --cached lib/v3-periphery || true
 git rm -r --cached lib/openzeppelin-contracts || true
 
 # 변경 사항을 커밋
@@ -130,7 +135,7 @@ forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
 # Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
 git add --force lib/forge-std
-git add --force lib/uniswap-v3
+git add --force lib/v3-periphery
 git add --force lib/openzeppelin-contracts
 git commit -m "Add libraries without committing the libraries themselves" || true
 
@@ -144,7 +149,7 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 pragma solidity ^0.8.0;
 
 import "uniswap-v3/contracts/interfaces/ISwapRouter.sol";
-import "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import "openzeppelin/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
     ISwapRouter public swapRouter;
@@ -197,7 +202,7 @@ cat <<EOF > scripts/SwapWETHToETH.s.sol
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import "openzeppelin/token/ERC20/IERC20.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract SwapWETHToETH is Script {
@@ -219,19 +224,11 @@ EOF
 
 # 스마트 계약 컴파일
 print_command "스마트 계약을 컴파일 중..."
-forge build || true
-
-# UniswapV3Swap 계약을 배포
-print_command "UniswapV3Swap 계약을 배포 중..."
-forge script scripts/DeployUniV3Swap.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --verify -vvvv || true
-
-# WETH를 ETH로 스왑
-print_command "WETH를 ETH로 스왑 중..."
-forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --gas-price 100000000 --gas-limit 36312 || true
+forge build
 
 # 테스트 실행
 print_command "테스트를 실행 중..."
-forge test --gas-report || true
+forge test
 
 echo -e "${GREEN}모든 작업이 완료되었습니다.${RESET}"
 echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${RESET}"
