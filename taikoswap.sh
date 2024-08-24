@@ -50,12 +50,12 @@ url = "https://rpc.mainnet.taiko.xyz"
 chain_id = 1
 
 [profile.compiler]
-solc_version = "0.8.26"
+solc_version = "0.8.19"
 
 [remappings]
+"forge-std/=lib/forge-std/src/"
 "uniswap-v3/=lib/uniswap-v3/contracts/"
 "openzeppelin/=lib/openzeppelin-contracts/contracts/"
-"forge-std/=lib/forge-std/src/"
 EOF
 
 # `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
