@@ -21,7 +21,22 @@ cd /root/taikoswap
 
 # Git 초기화
 print_command "Git 저장소를 초기화 중..."
-git init
+if [ ! -d .git ]; then
+  git init
+fi
+
+# .gitignore 파일 생성
+print_command ".gitignore 파일을 설정 중..."
+cat <<EOF > .gitignore
+# Ignore directories
+/lib/
+/scripts/*.log
+/scripts/*.json
+/scripts/*.solc
+
+# Ignore environment files
+.env
+EOF
 
 # Foundry 설치
 print_command "Foundry를 설치 중..."
@@ -61,6 +76,11 @@ url = "https://rpc.mainnet.taiko.xyz"
 "openzeppelin" = "lib/openzeppelin-contracts/contracts/"
 "forge-std" = "lib/forge-std/src/"
 EOF
+
+# Git에 파일 스테이징하고 커밋
+print_command "Git에 파일을 추가하고 커밋 중..."
+git add .
+git commit -m "Initial commit: add base files and directories"
 
 # `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
 print_command "라이브러리를 설치 중..."
