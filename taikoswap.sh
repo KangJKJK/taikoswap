@@ -56,7 +56,7 @@ url = "https://rpc.mainnet.taiko.xyz"
 chain_id = 1
 
 [profile.compiler]
-solc_version = "0.8.19"
+solc_version = "0.8.26"
 
 [remappings]
 "forge-std/=lib/forge-std/src/"
@@ -64,7 +64,7 @@ solc_version = "0.8.19"
 "openzeppelin/=lib/openzeppelin-contracts/contracts/"
 EOF
 
-# `forge-std`와 Uniswap V3의 라이브러리 수동 설치
+# `forge-std`와 Uniswap V3, OpenZeppelin의 라이브러리 수동 설치
 print_command "라이브러리를 수동으로 설치 중..."
 mkdir -p lib
 cd lib
