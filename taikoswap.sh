@@ -27,6 +27,7 @@ fi
 
 # Foundry 설치
 print_command "Foundry를 설치 중..."
+sudo apt-get remove forge
 curl -L https://foundry.paradigm.xyz | bash
 . "$HOME/.foundry/bin/foundryup"
 
