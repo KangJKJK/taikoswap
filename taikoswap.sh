@@ -79,25 +79,22 @@ EOF
 
 # Git 상태 정리 및 초기 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
-git add .env foundry.toml .gitignore
+git add .
 git commit -m "Initial commit: add .env, foundry.toml, .gitignore"
-
-# 기존 라이브러리 디렉토리 삭제
-print_command "기존 라이브러리 디렉토리 삭제 중..."
-rm -rf lib/forge-std
-rm -rf lib/uniswap-v3
-rm -rf lib/openzeppelin-contracts
 
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
-forge install foundry-rs/forge-std
-forge install uniswap/v3-periphery
-forge install OpenZeppelin/openzeppelin-contracts
+forge install foundry-rs/forge-std --no-commit
+forge install uniswap/v3-periphery --no-commit
+forge install OpenZeppelin/openzeppelin-contracts --no-commit
 
-# Git 상태 정리 후, 라이브러리 설치 완료 커밋
+# Git 상태 확인 및 라이브러리 설치 완료 커밋
+print_command "Git 상태 확인 중..."
+git status
+
 print_command "Git에 파일을 추가하고 커밋 중..."
 git add .
-git commit -m "Add libraries"
+git commit -m "Add libraries without committing the libraries themselves"
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
@@ -182,11 +179,6 @@ contract SwapWETHToETH is Script {
 }
 EOF
 
-# Git에 파일 스테이징하고 커밋
-print_command "Git에 파일을 추가하고 커밋 중..."
-git add .
-git commit -m "Add contracts and scripts"
-
 # 스마트 계약 컴파일
 print_command "스마트 계약을 컴파일 중..."
 forge build
@@ -197,7 +189,7 @@ forge script scripts/DeployUniV3Swap.s.sol --rpc-url https://rpc.mainnet.taiko.x
 
 # WETH를 ETH로 스왑
 print_command "WETH를 ETH로 스왑 중..."
-forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --verify -vvvv
+forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz --broadcast --gas-price 100000000 --gas-limit 36312
 
 # 테스트 실행
 print_command "테스트를 실행 중..."
