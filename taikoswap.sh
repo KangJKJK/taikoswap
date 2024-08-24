@@ -85,6 +85,11 @@ sed -i '/\.env/d' .gitignore
 git add .env
 git commit -m "Add .env file" || true  # 실패해도 계속 진행
 
+# 명령어 출력 함수
+print_command() {
+  echo -e "${BOLD}${YELLOW}$1${RESET}"
+}
+
 # Git 상태 정리 및 초기 커밋
 print_command "Git에 파일을 추가하고 초기 커밋 중..."
 git add .
@@ -108,13 +113,25 @@ remove_submodule() {
 }
 
 # 기존 서브모듈 제거
+print_command "기존 서브모듈 제거 중..."
 remove_submodule "lib/forge-std"
 remove_submodule "lib/uniswap-v3"
 remove_submodule "lib/openzeppelin-contracts"
 
+# 서브모듈 제거 후 캐시에서 항목 제거
+print_command "Removing cached entries for old submodules..."
+git rm -r --cached lib/forge-std || true
+git rm -r --cached lib/uniswap-v3 || true
+git rm -r --cached lib/openzeppelin-contracts || true
+
+# 변경 사항을 커밋
+print_command "Committing changes after removing old submodules..."
+git add .
+git commit -m "Remove problematic directories from index" || true
+
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
-apt install snap
+apt install snap || true
 forge install foundry-rs/forge-std --no-commit || true
 forge install uniswap/v3-periphery --no-commit || true
 forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
