@@ -133,7 +133,14 @@ print_command "Committing changes after removing old submodules..."
 git add .
 git commit -m "Remove problematic directories from index" || true
 
-# 라이브러리 설치 명령
+# 디렉토리 존재 여부 확인
+if [ ! -d "lib/uniswap-v3" ]; then
+  git clone https://github.com/uniswap/v3-core.git lib/uniswap-v3
+else
+  print_command "Directory lib/uniswap-v3 already exists, skipping clone."
+fi
+
+# 나머지 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
 mkdir -p lib/uniswap-v3/contracts/interfaces/callback/
 forge install foundry-rs/forge-std --no-commit || true
@@ -148,7 +155,6 @@ git add --force lib/forge-std
 git add --force lib/v3-periphery
 git add --force lib/openzeppelin-contracts
 git commit -m "Add libraries without committing the libraries themselves" || true
-git clone https://github.com/uniswap/v3-core.git lib/uniswap-v3
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
