@@ -113,6 +113,5 @@ forge script scripts/SwapWETHToETH.s.sol --rpc-url https://rpc.mainnet.taiko.xyz
 print_command "테스트를 실행 중..."
 forge test --gas-report
 
-echo -e "${GREEN}모든 작업이 완료되었습니다.${NC}"
-echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${NC}"
-
+echo -e "${GREEN}모든 작업이 완료되었습니다.${RESET}"
+echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${RESET}"
