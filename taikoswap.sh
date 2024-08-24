@@ -53,9 +53,9 @@ chain_id = 1
 solc_version = "0.8.19"
 
 [remappings]
-"forge-std/=lib/forge-std/src/"
-"uniswap-v3/=lib/uniswap-v3/contracts/"
-"openzeppelin/=lib/openzeppelin-contracts/contracts/"
+"lib/forge-std/src/"
+"lib/uniswap-v3/contracts/"
+"lib/openzeppelin-contracts/contracts/"
 EOF
 
 # `forge-std`, Uniswap V3 Periphery, OpenZeppelin 라이브러리 설치
