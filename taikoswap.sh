@@ -165,3 +165,4 @@ forge test --gas-report
 
 echo -e "${GREEN}모든 작업이 완료되었습니다.${RESET}"
 echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${RESET}"
+
