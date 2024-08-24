@@ -95,7 +95,7 @@ remove_submodule() {
   local submodule_path=$1
   
   # 서브모듈 경로가 존재할 때만 처리
-  if [ -d "$submodule_path" ] || git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
+  if git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
     echo "Removing submodule at $submodule_path"
 
     # 서브모듈 제거
@@ -112,6 +112,7 @@ remove_submodule "lib/forge-std"
 remove_submodule "lib/uniswap-v3"
 remove_submodule "lib/openzeppelin-contracts"
 
+
 # 라이브러리 설치 명령
 print_command "라이브러리를 설치 중..."
 forge install foundry-rs/forge-std --no-commit || true
@@ -120,9 +121,11 @@ forge install OpenZeppelin/openzeppelin-contracts --no-commit || true
 
 # Git 상태 정리 후, 라이브러리 설치 완료 커밋
 print_command "Git에 파일을 추가하고 커밋 중..."
-git rm -r --cached . || true
-git add .
-git commit -m "Add libraries without committing the libraries themselves" || true  # 실패해도 계속 진행
+git add --force lib/v3-periphery
+git rm -r --cached lib/forge-std || true
+git rm -r --cached lib/uniswap-v3 || true
+git rm -r --cached lib/openzeppelin-contracts || true
+git commit -m "Add libraries without committing the libraries themselves" || true
 
 # 계약 및 스크립트 디렉토리 생성
 print_command "디렉토리 및 계약 파일을 설정 중..."
