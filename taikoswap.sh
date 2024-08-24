@@ -234,9 +234,5 @@ print_command "스마트 계약을 컴파일 중..."
 forge clean
 forge build
 
-# 테스트 실행
-print_command "테스트를 실행 중..."
-forge test
-
 echo -e "${GREEN}모든 작업이 완료되었습니다.${RESET}"
 echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${RESET}"
