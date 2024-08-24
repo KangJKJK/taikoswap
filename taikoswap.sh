@@ -14,6 +14,11 @@ print_command() {
 # 홈 디렉토리로 이동
 cd $HOME
 
+# taikoswap 디렉토리로 이동 또는 생성
+print_command "디렉토리를 설정 중..."
+mkdir -p /root/taikoswap
+cd /root/taikoswap
+
 # Foundry 설치
 print_command "Foundry를 설치 중..."
 curl -L https://foundry.paradigm.xyz | bash
