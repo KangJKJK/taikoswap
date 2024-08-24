@@ -155,7 +155,7 @@ cat <<EOF > contracts/UniswapV3Swap.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@uniswap/v3-periphery/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-core/interfaces/ISwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract UniswapV3Swap {
