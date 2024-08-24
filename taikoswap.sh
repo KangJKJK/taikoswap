@@ -154,6 +154,7 @@ print_command "디렉토리 및 계약 파일을 설정 중..."
 mkdir -p scripts contracts
 
 # UniswapV3Swap 계약 생성
+print_command "유니스왑v3스왑 컨트랙 생성중..."
 cat <<EOF > contracts/UniswapV3Swap.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -182,12 +183,13 @@ contract UniswapV3Swap {
 EOF
 
 # UniswapV3Swap 배포 스크립트 생성
+print_command "컨트랙 배포 생성중..."
 cat <<EOF > scripts/DeployUniV3Swap.s.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "forge-std/Script.sol";
-import "uniswap-v3/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-core/interfaces/ISwapRouter.sol";
 import "../contracts/UniswapV3Swap.sol";
 
 contract DeployUniswapV3Swap is Script {
