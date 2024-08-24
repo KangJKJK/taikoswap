@@ -67,7 +67,7 @@ url = "https://rpc.mainnet.taiko.xyz"
 [profile.remappings]
 "@openzeppelin/contracts/=" = "lib/openzeppelin-contracts/contracts/"
 "@uniswap/v3-core/=" = "lib/uniswap-v3/contracts/"
-"@uniswap/v3-periphery/=" = "lib/v3-periphery/"
+"@uniswap/v3-periphery/=" = "lib/v3-periphery/contracts/"
 "forge-std/=" = "lib/forge-std/src/"
 EOF
 
