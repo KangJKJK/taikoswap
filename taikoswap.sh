@@ -85,7 +85,7 @@ sed -i '/\.env/d' .gitignore
 git add .env
 git commit -m "Add .env file" || true  # 실패해도 계속 진행
 
-# 서브모듈 제거 함수
+# 서브모듈 제거 및 디렉토리 삭제 함수
 remove_submodule() {
   local submodule_path=$1
 
@@ -93,7 +93,7 @@ remove_submodule() {
     echo "Removing directory at $submodule_path"
     rm -rf "$submodule_path"
   fi
-  
+
   if git config --file .gitmodules --get-regexp path | grep "$submodule_path"; then
     echo "Removing submodule entry for $submodule_path"
     git submodule deinit -f "$submodule_path" || true
